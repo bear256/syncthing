@@ -1539,7 +1539,7 @@ func sendIndexTo(minSequence int64, conn protocol.Connection, folder string, fs 
 func (m *Model) makeUsLastModified(fs []protocol.FileInfo) []protocol.FileInfo {
 	fsMod := make([]protocol.FileInfo, 0, len(fs))
 	for _, file := range fs {
-		file.ModifiedBy = uint64(m.id.Short())
+		file.ModifiedBy = m.id.Short()
 		fsMod = append(fsMod, file)
 	}
 
@@ -1629,7 +1629,7 @@ func (m *Model) diskChangeDetected(folderCfg config.FolderConfiguration, files [
 				"action":     action,
 				"type":       objType,
 				"path":       path,
-				"modifiedBy": protocol.ShortID(file.ModifiedBy).String(),
+				"modifiedBy": file.ModifiedBy.String(),
 			})
 		} else {
 			events.Default.Log(events.RemoteChangeDetected, map[string]string{
@@ -1638,7 +1638,7 @@ func (m *Model) diskChangeDetected(folderCfg config.FolderConfiguration, files [
 				"action":     action,
 				"type":       objType,
 				"path":       path,
-				"modifiedBy": protocol.ShortID(file.ModifiedBy).String(),
+				"modifiedBy": file.ModifiedBy.String(),
 			})
 		}
 	}
